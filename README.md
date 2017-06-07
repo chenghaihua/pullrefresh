@@ -1,7 +1,25 @@
 # pullrefresh
 H5下拉刷新上拉加载更多使用教程
 
-1.引用样式
+1.在页面上添加两个元素<br>
+&lt;div id="demo"&gt;&lt;div style="text-align:center"&gt;正在加载中...&lt;/div&gt;&lt;/div&gt;<br>
+&lt;div class="x-pullfresh-more"&gt;加载更多&gt;/div&gt;
+
+2.加载数据方法<br>
+pullrefresh.doRefresh({<br>
+&nbsp;&nbsp;&nbsp;&nbsp;debug: true,		 // 模拟真实请求数据，否则会出现ajax跨域，正式使用中请去h5.js中删除debug代码<br>
+&nbsp;&nbsp;&nbsp;&nbsp;url: './list.json',  // 必填，ajax加载数据请求的地址<br>
+&nbsp;&nbsp;&nbsp;&nbsp;data: {size: 20},   // 非必填，ajax请求数据的参数，如果启用了缓存，将影响浏览器的缓存数据<br>
+&nbsp;&nbsp;&nbsp;&nbsp;dataType: "json",   // 非必填，ajax请求返回的数据类型<br>
+&nbsp;&nbsp;&nbsp;&nbsp;container: '#demo', // 非必填，用于计算document.body.scrollTop等于多少时自动加载更多数据<br>
+&nbsp;&nbsp;&nbsp;&nbsp;cache: 'test',	    // 非必填，如果不想让浏览器缓存请写false，否则请写唯一的标记，具体请观察sessionStorage<br>
+&nbsp;&nbsp;&nbsp;&nbsp;success: function(list, page, size){ // ajax请求成功后服务端返回来的数据<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;// 在此处理服务器返回的数据，绑定到demo元素中<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return true; // 返回true表示还有更多数据;返回false表示没有更多数据了我通常写return list.length >= size<br>
+&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+});
+
+3.引用样式
 <br>***下拉刷新样式***
 <br>.x-pullfresh-wrapper{position:fixed;left:0;top:-42px;width:100%;height:42px;margin:0 auto;z-index:10;opacity:0}
 <br>.x-pullfresh-wrapper .x-pullfresh-loading{position:relative;width:40px;height:40px;overflow:hidden;background-color:rgba(255,255,255,0.9);border:1px solid rgba(230,230,230,0.5);border-radius:36px;margin:0 auto;text-align: center;line-height: 40px;-webkit-transition: all 1s;-moz-transition:all 1s;-o-transition:all 1s;}
@@ -28,21 +46,3 @@ H5下拉刷新上拉加载更多使用教程
 <br>}@-webkit-keyframes pfloader{from{-webkit-transform:scale(0,0)}
 <br>to{-webkit-transform:scale(1,1)}
 <br>}
-
-2.在页面上添加两个元素<br>
-&lt;div id="demo"&gt;&lt;div style="text-align:center"&gt;正在加载中...&lt;/div&gt;&lt;/div&gt;<br>
-&lt;div class="x-pullfresh-more"&gt;加载更多&gt;/div&gt;
-
-3.加载数据方法<br>
-pullrefresh.doRefresh({<br>
-&nbsp;&nbsp;&nbsp;&nbsp;debug: true,		 // 模拟真实请求数据，否则会出现ajax跨域，正式使用中请去h5.js中删除debug代码<br>
-&nbsp;&nbsp;&nbsp;&nbsp;url: './list.json',  // 必填，ajax加载数据请求的地址<br>
-&nbsp;&nbsp;&nbsp;&nbsp;data: {size: 20},   // 非必填，ajax请求数据的参数，如果启用了缓存，将影响浏览器的缓存数据<br>
-&nbsp;&nbsp;&nbsp;&nbsp;dataType: "json",   // 非必填，ajax请求返回的数据类型<br>
-&nbsp;&nbsp;&nbsp;&nbsp;container: '#demo', // 非必填，用于计算document.body.scrollTop等于多少时自动加载更多数据<br>
-&nbsp;&nbsp;&nbsp;&nbsp;cache: 'test',	    // 非必填，如果不想让浏览器缓存请写false，否则请写唯一的标记，具体请观察sessionStorage<br>
-&nbsp;&nbsp;&nbsp;&nbsp;success: function(list, page, size){ // ajax请求成功后服务端返回来的数据<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;// 在此处理服务器返回的数据，绑定到demo元素中<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return true; // 返回true表示还有更多数据;返回false表示没有更多数据了我通常写return list.length >= size<br>
-&nbsp;&nbsp;&nbsp;&nbsp;}<br>
-});
