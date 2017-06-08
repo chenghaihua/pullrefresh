@@ -79,8 +79,7 @@ require(['h5/pullrefresh'], function(pullrefresh){
 				$demo.append(html);
 			}
 			
-			return $demo.children().length < 100;
-			return true; // 返回true表示还有更多数据，返回false表示没有更多数据了。我通常都这么写return list.length >= size
+			return $demo.children().length < 100;// 是否有更多数据。我通常都这么写return list.length >= size
 		}
 	});
 });
